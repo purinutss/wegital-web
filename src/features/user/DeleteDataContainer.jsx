@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "../../components/Modal";
 import DeleteDataForm from "../user/DeleteDataForm";
 
-export default function DeleteDataContainer() {
+export default function DeleteDataContainer({ proportionId, fetchProportion }) {
   const [open, setOpen] = useState(false);
   return (
     <div>
@@ -16,7 +16,11 @@ export default function DeleteDataContainer() {
         Delete
       </button>
       <Modal open={open} onClose={() => setOpen(false)} title="Do you want to delete this data?">
-        <DeleteDataForm onClose={() => setOpen(false)} />
+        <DeleteDataForm
+          onClose={() => setOpen(false)}
+          proportionId={proportionId}
+          fetchProportion={fetchProportion}
+        />
       </Modal>
     </div>
   );

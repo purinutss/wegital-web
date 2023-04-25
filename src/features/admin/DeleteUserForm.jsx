@@ -8,7 +8,7 @@ export default function DeleteUserForm({ onClose, userId, fetchUser }) {
     try {
       await userApi.deleteUser(userId);
       fetchUser();
-      toast.success("Delete user is successfully.");
+      toast.success("Delete user successfully.");
     } catch (err) {
       console.log(err);
     }

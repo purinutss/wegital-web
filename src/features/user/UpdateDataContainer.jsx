@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "../../components/Modal";
 import UpdateDataForm from "./UpdateDataForm";
 
-export default function UpdateDataContainer() {
+export default function UpdateDataContainer({ proportion, fetchProportion }) {
   const [open, setOpen] = useState(false);
   return (
     <div>
@@ -19,7 +19,11 @@ export default function UpdateDataContainer() {
         </button>
       </div>
       <Modal open={open} onClose={() => setOpen(false)} title="Update Body Proportion">
-        <UpdateDataForm onClose={() => setOpen(false)} />
+        <UpdateDataForm
+          onClose={() => setOpen(false)}
+          proportion={proportion}
+          fetchProportion={fetchProportion}
+        />
       </Modal>
     </div>
   );

@@ -9,7 +9,6 @@ import LogoutButton from "../features/auth/LogoutButton";
 
 export default function AllUserAdmin() {
   const [users, setUsers] = useState([]);
-  const [isUpdateUser, setIsUpdateUser] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,8 +23,7 @@ export default function AllUserAdmin() {
 
   useEffect(() => {
     fetchUsers();
-    setIsUpdateUser(false);
-  }, [isUpdateUser]);
+  }, []);
 
   return (
     <>
@@ -56,18 +54,14 @@ export default function AllUserAdmin() {
               />
             </div>
             <div className="flex gap-3">
-              <div>
-                <CreateUserContainer fetchUser={() => fetchUsers()} />
-              </div>
-              <div>
-                <LogoutButton />
-              </div>
+              <CreateUserContainer fetchUser={() => fetchUsers()} />
+              <LogoutButton />
             </div>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 ">
               <thead className="text-xs text-gray-700 uppercase bg-gray-200 ">
-                <tr>
+                <tr className="text-center">
                   <th scope="col" className="px-6 py-3">
                     Id
                   </th>
@@ -93,7 +87,7 @@ export default function AllUserAdmin() {
               </thead>
               <tbody>
                 {users.map((user) => (
-                  <tr key={user.id} className="bg-slate-50 cursor-pointer">
+                  <tr key={user.id} className="bg-slate-50 cursor-pointer text-center">
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -142,7 +136,7 @@ export default function AllUserAdmin() {
                     </td>
                     <td className="px-3 py-4">
                       <div className="flex gap-3">
-                        <UpdateUserContainer user={user} setIsUpdateUser={setIsUpdateUser} />
+                        <UpdateUserContainer user={user} fetchUsers={() => fetchUsers()} />
                         <DeleteUserContainer userId={user.id} fetchUser={() => fetchUsers()} />
                       </div>
                     </td>

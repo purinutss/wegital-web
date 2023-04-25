@@ -39,7 +39,7 @@ export default function CreateUserForm({ onClose, fetchUser }) {
         setInput(initialInput);
         onClose();
         fetchUser();
-        toast.success("create user is successfully");
+        toast.success("Create user successfully");
       }
     } catch (err) {
       toast.error(err?.response?.data?.message);

@@ -1,19 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+
 import Input from "../../components/Input";
+import * as proportionApi from "../../apis/proportionApi";
+
+const initialInput = {
+  height: "",
+  weight: "",
+  waist: "",
+  date: ""
+};
 
 export default function AddDataForm({ onClose }) {
+  const [input, setInput] = useState(initialInput);
+  const handleChangeInput = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmitForm = async (e) => {
+    try {
+      await proportionApi.createProportion(input);
+      setInput(initialInput);
+      onClose();
+      toast.success("Add data successfully.");
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
+
   return (
     <>
       <div className="w-[100%] flex justify-center items-center">
         <div className="w-[80%]">
-          <form>
+          <form onSubmit={handleSubmitForm}>
             <div className="mb-6">
               <label htmlFor="height" className="block mb-2 text-sm font-medium text-gray-900 ">
                 Height (Cm.)
               </label>
               <Input
-                type="number"
                 name="height"
+                value={input.height}
+                onChange={handleChangeInput}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                 required
               />
@@ -23,8 +53,9 @@ export default function AddDataForm({ onClose }) {
                 Weight (Kg.)
               </label>
               <Input
-                type="number"
                 name="weight"
+                value={input.weight}
+                onChange={handleChangeInput}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                 required
               />
@@ -34,8 +65,9 @@ export default function AddDataForm({ onClose }) {
                 Waist (Inc.)
               </label>
               <Input
-                type="number"
                 name="waist"
+                value={input.waist}
+                onChange={handleChangeInput}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                 required
               />
@@ -47,6 +79,8 @@ export default function AddDataForm({ onClose }) {
               <Input
                 type="date"
                 name="date"
+                value={input.date}
+                onChange={handleChangeInput}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                 required
               />

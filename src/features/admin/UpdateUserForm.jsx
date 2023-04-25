@@ -4,16 +4,17 @@ import { toast } from "react-toastify";
 import Input from "../../components/Input";
 import * as userApi from "../../apis/userApi";
 
-export default function UpdateUserForm({ onClose, user, setIsUpdateUser }) {
+export default function UpdateUserForm({ onClose, user, fetchUsers }) {
   const [input, setInput] = useState(user);
 
   const handleEditUserForm = async (e) => {
     e.preventDefault();
     try {
-      const updateUser = await userApi.updateUser(user.id, input);
-      setIsUpdateUser(true);
+      await userApi.updateUser(user.id, input);
+      fetchUsers();
+      onClose();
 
-      toast.success("Update user is successfully.");
+      toast.success("Update user successfully.");
     } catch (err) {
       toast.error(err?.response?.data?.message);
     }
@@ -81,7 +82,6 @@ export default function UpdateUserForm({ onClose, user, setIsUpdateUser }) {
                 <button
                   type="submit"
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg w-full sm:w-auto px-10 py-2.5 text-center "
-                  onClick={onClose}
                 >
                   Submit
                 </button>
