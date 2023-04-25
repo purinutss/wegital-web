@@ -65,7 +65,7 @@ export default function ShowUserData() {
               <tbody>
                 {proportions &&
                   proportions.map((proportion) => (
-                    <tr className="bg-slate-50 cursor-pointer text-center">
+                    <tr className="bg-slate-50 text-center">
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "

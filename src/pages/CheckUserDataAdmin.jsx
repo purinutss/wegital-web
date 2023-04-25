@@ -46,7 +46,7 @@ export default function CheckUserDataAdmin() {
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 ">
               <thead className="text-xs text-gray-700 uppercase bg-gray-200 ">
-                <tr>
+                <tr className="text-center">
                   <th scope="col" className="px-6 py-3">
                     Date
                   </th>
@@ -63,7 +63,7 @@ export default function CheckUserDataAdmin() {
               </thead>
               <tbody>
                 {proportions.map((proportion) => (
-                  <tr key={proportion?.id} className="bg-slate-50 cursor-pointer">
+                  <tr key={proportion?.id} className="bg-slate-50 text-center">
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
