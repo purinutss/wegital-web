@@ -19,7 +19,13 @@ export default function UpdateUserContainer() {
         </button>
       </div>
       <Modal open={open} onClose={() => setOpen(false)} title="Update User Information">
-        <UpdateUserForm onClose={() => setOpen(false)} />
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <UpdateUserForm onClose={() => setOpen(false)} />
+        </div>
       </Modal>
     </div>
   );

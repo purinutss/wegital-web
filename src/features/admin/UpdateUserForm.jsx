@@ -6,7 +6,11 @@ export default function updateUserForm({ onClose }) {
     <>
       <div className="w-[100%] flex justify-center items-center">
         <div className="w-[80%]">
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <div className="mb-6">
               <label htmlFor="firstName" className="block mb-2 text-sm font-medium text-gray-900 ">
                 First Name
@@ -60,7 +64,10 @@ export default function updateUserForm({ onClose }) {
                 <button
                   type="button"
                   className="text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg w-full sm:w-auto px-10 py-2.5 text-center "
-                  onMouseDown={onClose}
+                  onMouseDown={(e) => {
+                    e.stopPropagation();
+                    onClose();
+                  }}
                 >
                   Cancel
                 </button>

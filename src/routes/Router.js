@@ -1,3 +1,5 @@
+import DirectIfAuthenticated from "../features/auth/DirectIfAuthenticated";
+import ProtectedRoute from "../features/auth/ProtectRoute";
 import AllUserAdmin from "../pages/AllUserAdmin";
 import CheckUserDataAdmin from "../pages/CheckUserDataAdmin";
 import LoginPage from "../pages/LoginPage";
@@ -6,10 +8,39 @@ import ShowUserData from "../pages/ShowUserData";
 const { createBrowserRouter, RouterProvider } = require("react-router-dom");
 
 const router = createBrowserRouter([
-  { path: "/login", element: <LoginPage /> },
-  { path: "/", element: <ShowUserData /> },
-  { path: "/users", element: <AllUserAdmin /> },
-  { path: "/check/:userId", element: <CheckUserDataAdmin /> }
+  {
+    path: "/login",
+    element: (
+      <DirectIfAuthenticated>
+        <LoginPage />
+      </DirectIfAuthenticated>
+    )
+  },
+
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <ShowUserData />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/users",
+    element: (
+      <ProtectedRoute>
+        <AllUserAdmin />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/check/:userId",
+    element: (
+      <ProtectedRoute>
+        <CheckUserDataAdmin />
+      </ProtectedRoute>
+    )
+  }
 ]);
 
 export default function Router() {
