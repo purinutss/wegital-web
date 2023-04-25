@@ -14,7 +14,6 @@ export default function ShowUserData() {
   const fetchProportion = async () => {
     try {
       const response = await proportionApi.getProportionByUserId();
-      console.log(response);
       setProportions(response.data.userProportion);
     } catch (err) {
       console.log(err);
@@ -65,7 +64,7 @@ export default function ShowUserData() {
               <tbody>
                 {proportions &&
                   proportions.map((proportion) => (
-                    <tr className="bg-slate-50 text-center">
+                    <tr key={proportion.id} className="bg-slate-50 text-center">
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
