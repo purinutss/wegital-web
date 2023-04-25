@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "../../components/Modal";
 import UpdateUserForm from "./UpdateUserForm";
 
-export default function UpdateUserContainer() {
+export default function UpdateUserContainer({ user, setIsUpdateUser }) {
   const [open, setOpen] = useState(false);
   return (
     <div>
@@ -24,7 +24,11 @@ export default function UpdateUserContainer() {
             e.stopPropagation();
           }}
         >
-          <UpdateUserForm onClose={() => setOpen(false)} />
+          <UpdateUserForm
+            onClose={() => setOpen(false)}
+            user={user}
+            setIsUpdateUser={setIsUpdateUser}
+          />
         </div>
       </Modal>
     </div>

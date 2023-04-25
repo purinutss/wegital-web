@@ -5,23 +5,27 @@ import UpdateUserContainer from "../features/admin/UpdateUserContainer";
 import DeleteUserContainer from "../features/admin/DeleteUserContainer";
 import CreateUserContainer from "../features/auth/CreateUserContainer";
 import * as userApi from "../apis/userApi";
+import LogoutButton from "../features/auth/LogoutButton";
 
 export default function AllUserAdmin() {
   const [users, setUsers] = useState([]);
+  const [isUpdateUser, setIsUpdateUser] = useState(false);
 
   const navigate = useNavigate();
 
+  const fetchUsers = async () => {
+    try {
+      const response = await userApi.getAllUsers();
+      setUsers(response.data.users);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await userApi.getAllUsers();
-        setUsers(response.data.users);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchUsers();
-  }, []);
+    setIsUpdateUser(false);
+  }, [isUpdateUser]);
 
   return (
     <>
@@ -51,8 +55,13 @@ export default function AllUserAdmin() {
                 placeholder="Search"
               />
             </div>
-            <div>
-              <CreateUserContainer />
+            <div className="flex gap-3">
+              <div>
+                <CreateUserContainer fetchUser={() => fetchUsers()} />
+              </div>
+              <div>
+                <LogoutButton />
+              </div>
             </div>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -84,7 +93,7 @@ export default function AllUserAdmin() {
               </thead>
               <tbody>
                 {users.map((user) => (
-                  <tr className="bg-slate-50 cursor-pointer">
+                  <tr key={user.id} className="bg-slate-50 cursor-pointer">
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -99,14 +108,42 @@ export default function AllUserAdmin() {
                     >
                       {user.firstName}
                     </td>
-                    <td className="px-6 py-4">{user.lastName}</td>
-                    <td className="px-6 py-4">{user.citizenId}</td>
-                    <td className="px-6 py-4">{user.telephoneNumber}</td>
-                    <td className="px-6 py-4">{user.username}</td>
+                    <td
+                      className="px-6 py-4"
+                      onClick={() => {
+                        navigate(`/check/${user.id}`);
+                      }}
+                    >
+                      {user.lastName}
+                    </td>
+                    <td
+                      className="px-6 py-4"
+                      onClick={() => {
+                        navigate(`/check/${user.id}`);
+                      }}
+                    >
+                      {user.citizenId}
+                    </td>
+                    <td
+                      className="px-6 py-4"
+                      onClick={() => {
+                        navigate(`/check/${user.id}`);
+                      }}
+                    >
+                      {user.telephoneNumber}
+                    </td>
+                    <td
+                      className="px-6 py-4"
+                      onClick={() => {
+                        navigate(`/check/${user.id}`);
+                      }}
+                    >
+                      {user.username}
+                    </td>
                     <td className="px-3 py-4">
                       <div className="flex gap-3">
-                        <UpdateUserContainer />
-                        <DeleteUserContainer userId={user.id} />
+                        <UpdateUserContainer user={user} setIsUpdateUser={setIsUpdateUser} />
+                        <DeleteUserContainer userId={user.id} fetchUser={() => fetchUsers()} />
                       </div>
                     </td>
                   </tr>

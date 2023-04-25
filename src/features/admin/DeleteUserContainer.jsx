@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "../../components/Modal";
 import DeleteUserForm from "./DeleteUserForm";
 
-export default function DeleteUserContainer({ userId }) {
+export default function DeleteUserContainer({ fetchUser, userId }) {
   const [open, setOpen] = useState(false);
   return (
     <div>
@@ -16,7 +16,7 @@ export default function DeleteUserContainer({ userId }) {
         Delete
       </button>
       <Modal open={open} onClose={() => setOpen(false)} title="Do you want to delete this user?">
-        <DeleteUserForm onClose={() => setOpen(false)} userId={userId} />
+        <DeleteUserForm onClose={() => setOpen(false)} fetchUser={fetchUser} userId={userId} />
       </Modal>
     </div>
   );

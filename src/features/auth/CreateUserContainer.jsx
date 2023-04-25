@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "../../components/Modal";
 import CreateUserForm from "./CreateUserForm";
 
-export default function CreateUserContainer() {
+export default function CreateUserContainer({ fetchUser }) {
   const [open, setOpen] = useState(false);
   return (
     <div>
@@ -14,7 +14,7 @@ export default function CreateUserContainer() {
         Create User
       </button>
       <Modal open={open} onClose={() => setOpen(false)} title="Add Body Proportion">
-        <CreateUserForm onClose={() => setOpen(false)} />
+        <CreateUserForm onClose={() => setOpen(false)} fetchUser={fetchUser} />
       </Modal>
     </div>
   );

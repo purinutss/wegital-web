@@ -12,7 +12,7 @@ export default function Modal({ open, onClose, children, title }) {
           onMouseDown={onClose}
         >
           {/*Modal content */}
-          <div className="relative w-[35%]" onMouseDown={(e) => e.stopPropagation()}>
+          <div className="relative w-[40%]" onMouseDown={(e) => e.stopPropagation()}>
             <div className="relative bg-white rounded-lg shadow  p-2 ">
               {/*Modal header*/}
               <div className="flex items-start justify-between p-4 border-b rounded-t ">

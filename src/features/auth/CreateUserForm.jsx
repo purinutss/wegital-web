@@ -1,12 +1,59 @@
-import React from "react";
-import Input from "../../components/Input";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
-export default function CreateUserForm({ onClose }) {
+import * as authApi from "../../apis/AuthApi";
+import Input from "../../components/Input";
+import validateRegister from "../../validators/RegisterValidator";
+
+const initialInput = {
+  firstName: "",
+  lastName: "",
+  citizenId: "",
+  telephoneNumber: "",
+  username: "",
+  password: ""
+};
+
+export default function CreateUserForm({ onClose, fetchUser }) {
+  const [input, setInput] = useState(initialInput);
+  const [error, setError] = useState({});
+
+  const handleChangeInput = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmitForm = async (e) => {
+    try {
+      e.preventDefault();
+      const result = validateRegister(input);
+
+      if (result) {
+        setError(result);
+      } else {
+        setError({});
+        // startLoading();
+        await authApi.register(input);
+        setInput(initialInput);
+        onClose();
+        fetchUser();
+        toast.success("create user is successfully");
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    }
+    // } finally {
+    //   stopLoading();
+    // }
+  };
+
   return (
     <>
       <div className="w-[100%] flex justify-center items-center">
         <div className="w-[95%]">
-          <form>
+          <form onSubmit={handleSubmitForm}>
             <div className="flex gap-3">
               <div className="mb-6">
                 <label
@@ -17,6 +64,9 @@ export default function CreateUserForm({ onClose }) {
                 </label>
                 <Input
                   name="firstName"
+                  value={input.firstName}
+                  onChange={handleChangeInput}
+                  error={error.firstName}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                 />
               </div>
@@ -26,6 +76,9 @@ export default function CreateUserForm({ onClose }) {
                 </label>
                 <Input
                   name="lastName"
+                  value={input.lastName}
+                  onChange={handleChangeInput}
+                  error={error.lastName}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                 />
               </div>
@@ -40,6 +93,9 @@ export default function CreateUserForm({ onClose }) {
                 </label>
                 <Input
                   name="citizenId"
+                  value={input.citizenId}
+                  onChange={handleChangeInput}
+                  error={error.citizenId}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                 />
               </div>
@@ -51,7 +107,10 @@ export default function CreateUserForm({ onClose }) {
                   Telephone Number
                 </label>
                 <Input
-                  name="Telephone Number"
+                  name="telephoneNumber"
+                  value={input.telephoneNumber}
+                  onChange={handleChangeInput}
+                  error={error.telephoneNumber}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                 />
               </div>
@@ -63,6 +122,9 @@ export default function CreateUserForm({ onClose }) {
                 </label>
                 <Input
                   name="username"
+                  value={input.username}
+                  onChange={handleChangeInput}
+                  error={error.username}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                 />
               </div>
@@ -73,6 +135,9 @@ export default function CreateUserForm({ onClose }) {
                 <Input
                   type="password"
                   name="password"
+                  value={input.password}
+                  onChange={handleChangeInput}
+                  error={error.password}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                 />
               </div>
@@ -91,7 +156,10 @@ export default function CreateUserForm({ onClose }) {
                 <button
                   type="button"
                   className="text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg w-full sm:w-auto px-10 py-2.5 text-center "
-                  onMouseDown={onClose}
+                  onClick={() => {
+                    onClose();
+                    setInput(initialInput);
+                  }}
                 >
                   Cancel
                 </button>

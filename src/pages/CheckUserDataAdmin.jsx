@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import * as userApi from "../apis/userApi";
+import { useParams } from "react-router-dom";
 
 export default function CheckUserDataAdmin() {
+  const [user, setUser] = useState({});
+  const [proportions, setProportions] = useState([]);
+  // console.log(proportions);
+  // console.log(user);
+  const { userId } = useParams();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await userApi.getUserById(userId);
+        setUser(response.data.user);
+        setProportions(response.data.user.Proportions);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUser();
+  }, []);
+
   return (
     <>
       <div className="p-6 flex flex-col items-center w-full">
@@ -8,15 +30,17 @@ export default function CheckUserDataAdmin() {
           <div className="mb-2">
             <div className="flex text-lg">
               <div className="font-bold">Name : &nbsp;</div>
-              <div>Purinut Seesen</div>
+              <div>
+                {user.firstName} {user.lastName}
+              </div>
             </div>
             <div className="flex text-lg">
               <div className="font-bold">Telephone : &nbsp;</div>
-              <div>0863441154</div>
+              <div>{user.telephoneNumber}</div>
             </div>
             <div className="flex text-lg">
               <div className="font-bold">CitizenID : &nbsp;</div>
-              <div>1103702589161</div>
+              <div>{user.citizenId}</div>
             </div>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -38,17 +62,19 @@ export default function CheckUserDataAdmin() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-slate-50 cursor-pointer">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                  >
-                    24/04/2023
-                  </th>
-                  <td className="px-6 py-4">168</td>
-                  <td className="px-6 py-4">80</td>
-                  <td className="px-6 py-4">35</td>
-                </tr>
+                {proportions.map((proportion) => (
+                  <tr key={proportion?.id} className="bg-slate-50 cursor-pointer">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      {proportion?.date}
+                    </th>
+                    <td className="px-6 py-4">{proportion?.height}</td>
+                    <td className="px-6 py-4">{proportion?.weight}</td>
+                    <td className="px-6 py-4">{proportion?.waist}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
