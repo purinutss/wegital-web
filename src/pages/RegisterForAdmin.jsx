@@ -36,7 +36,6 @@ export default function RegisterForAdmin() {
         setError(result);
       } else {
         setError({});
-        // startLoading();
         await authApi.register(input);
         setInput(initialInput);
         toast.success("Register successfully");
@@ -44,9 +43,6 @@ export default function RegisterForAdmin() {
     } catch (err) {
       toast.error(err?.response?.data?.message);
     }
-    // } finally {
-    //   stopLoading();
-    // }
   };
 
   return (

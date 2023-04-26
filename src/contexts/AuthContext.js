@@ -25,7 +25,6 @@ export default function AuthContextProvider({ children }) {
 
   const login = async (username, password) => {
     const res = await AuthApi.login({ username, password });
-    console.log(res);
     setAccessToken(res.data.accessToken);
     setAuthenticatedUser(jwtDecode(res.data.accessToken));
   };
