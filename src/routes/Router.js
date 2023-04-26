@@ -3,6 +3,7 @@ import ProtectedRoute from "../features/auth/ProtectRoute";
 import AllUserAdmin from "../pages/AllUserAdmin";
 import CheckUserDataAdmin from "../pages/CheckUserDataAdmin";
 import LoginPage from "../pages/LoginPage";
+import RegisterForAdmin from "../pages/RegisterForAdmin";
 import ShowUserData from "../pages/ShowUserData";
 
 const { createBrowserRouter, RouterProvider } = require("react-router-dom");
@@ -39,6 +40,14 @@ const router = createBrowserRouter([
       <ProtectedRoute>
         <CheckUserDataAdmin />
       </ProtectedRoute>
+    )
+  },
+  {
+    path: "/register/admin/only",
+    element: (
+      <DirectIfAuthenticated>
+        <RegisterForAdmin />
+      </DirectIfAuthenticated>
     )
   }
 ]);
