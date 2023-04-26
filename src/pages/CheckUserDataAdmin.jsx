@@ -6,8 +6,6 @@ import { useParams } from "react-router-dom";
 export default function CheckUserDataAdmin() {
   const [user, setUser] = useState({});
   const [proportions, setProportions] = useState([]);
-  // console.log(proportions);
-  // console.log(user);
   const { userId } = useParams();
 
   useEffect(() => {
@@ -21,7 +19,7 @@ export default function CheckUserDataAdmin() {
       }
     };
     fetchUser();
-  }, []);
+  }, [userId]);
 
   return (
     <>

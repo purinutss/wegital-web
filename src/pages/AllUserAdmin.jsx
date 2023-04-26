@@ -9,6 +9,7 @@ import LogoutButton from "../features/auth/LogoutButton";
 
 export default function AllUserAdmin() {
   const [users, setUsers] = useState([]);
+  const [searchCitizenId, setSearchCitizenId] = useState("");
 
   const navigate = useNavigate();
 
@@ -51,6 +52,8 @@ export default function AllUserAdmin() {
                 id="table-search"
                 className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50"
                 placeholder="Search"
+                value={searchCitizenId}
+                onChange={(e) => setSearchCitizenId(e.target.value)}
               />
             </div>
             <div className="flex gap-3">
@@ -86,62 +89,64 @@ export default function AllUserAdmin() {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user.id} className="bg-slate-50 cursor-pointer text-center">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      {user.id}
-                    </th>
-                    <td
-                      className="px-6 py-4"
-                      onClick={() => {
-                        navigate(`/check/${user.id}`);
-                      }}
-                    >
-                      {user.firstName}
-                    </td>
-                    <td
-                      className="px-6 py-4"
-                      onClick={() => {
-                        navigate(`/check/${user.id}`);
-                      }}
-                    >
-                      {user.lastName}
-                    </td>
-                    <td
-                      className="px-6 py-4"
-                      onClick={() => {
-                        navigate(`/check/${user.id}`);
-                      }}
-                    >
-                      {user.citizenId}
-                    </td>
-                    <td
-                      className="px-6 py-4"
-                      onClick={() => {
-                        navigate(`/check/${user.id}`);
-                      }}
-                    >
-                      {user.telephoneNumber}
-                    </td>
-                    <td
-                      className="px-6 py-4"
-                      onClick={() => {
-                        navigate(`/check/${user.id}`);
-                      }}
-                    >
-                      {user.username}
-                    </td>
-                    <td className="px-3 py-4">
-                      <div className="flex gap-3">
-                        <UpdateUserContainer user={user} fetchUsers={() => fetchUsers()} />
-                        <DeleteUserContainer userId={user.id} fetchUser={() => fetchUsers()} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {users
+                  .filter((user) => user.citizenId.toString().includes(searchCitizenId))
+                  .map((user) => (
+                    <tr key={user.id} className="bg-slate-50 cursor-pointer text-center">
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                      >
+                        {user.id}
+                      </th>
+                      <td
+                        className="px-6 py-4"
+                        onClick={() => {
+                          navigate(`/check/${user.id}`);
+                        }}
+                      >
+                        {user.firstName}
+                      </td>
+                      <td
+                        className="px-6 py-4"
+                        onClick={() => {
+                          navigate(`/check/${user.id}`);
+                        }}
+                      >
+                        {user.lastName}
+                      </td>
+                      <td
+                        className="px-6 py-4"
+                        onClick={() => {
+                          navigate(`/check/${user.id}`);
+                        }}
+                      >
+                        {user.citizenId}
+                      </td>
+                      <td
+                        className="px-6 py-4"
+                        onClick={() => {
+                          navigate(`/check/${user.id}`);
+                        }}
+                      >
+                        {user.telephoneNumber}
+                      </td>
+                      <td
+                        className="px-6 py-4"
+                        onClick={() => {
+                          navigate(`/check/${user.id}`);
+                        }}
+                      >
+                        {user.username}
+                      </td>
+                      <td className="px-3 py-4">
+                        <div className="flex gap-3">
+                          <UpdateUserContainer user={user} fetchUsers={() => fetchUsers()} />
+                          <DeleteUserContainer userId={user.id} fetchUser={() => fetchUsers()} />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
