@@ -138,8 +138,8 @@ export default function RegisterForAdmin() {
             </div>
           </div>
           <div className="mb-6 hidden">
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">
-              Password
+            <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 ">
+              Role
             </label>
             <Input
               name="role"
